@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // Lesson 03 exercise: Strings and numbers
 // In your exercise repository, create a branch named `lesson-03-exercise` and switch to it,
@@ -8,7 +8,12 @@
 // TODO: Part one.
 // Declare variables for a shop name, an opening hour, and a closing hour, then log one
 // welcoming sentence built as a single template literal that uses all three.
-
+const shopName = "Bookworm";
+const openingHour = 8;
+const closingHour = 17;
+console.log(
+  `Welcome to ${shopName}! We are open every day from ${openingHour} to ${closingHour}.`,
+);
 
 // TODO: Part two.
 // The file provides a messy string with surplus spaces at both ends, the wrong case, and one
@@ -18,8 +23,9 @@
 
 // * The provided messy string:
 const messy = "   Maison   Sarah, fresh bread daily   ";
-
-
+const cleaned = messy.trim().replace("bread", "coffee").toUpperCase();
+console.log(cleaned);
+// trim() removed extra spaces, replace() changed one word, and toUpperCase() converted the text to uppercase.
 // TODO: Part three.
 // Using the provided product string, log its length, the position at which a given word
 // begins, and a slice containing exactly that word. Then split the provided comma-separated
@@ -29,6 +35,14 @@ const messy = "   Maison   Sarah, fresh bread daily   ";
 const product = "Sourdough Loaf, whole grain";
 const flavorList = "rye,spelt,wheat,olive";
 
+console.log(product.length);
+
+const start = product.indexOf("whole");
+console.log(start);
+
+console.log(product.slice(start, start + 5));
+
+console.log(flavorList.split(","));
 
 // TODO: Part four.
 // From the net price and tax rate in the file, calculate the final price and log it inside a
@@ -38,18 +52,26 @@ const flavorList = "rye,spelt,wheat,olive";
 // * The provided net price and tax rate:
 const netPrice = 4.0;
 const taxRate = 0.07;
-
+const finalPrice = netPrice + netPrice * taxRate;
+console.log(`The final price is ${finalPrice.toFixed(2)}`);
+// toFixed() returns a string, so it should be used as the last step.
 
 // TODO: Part five.
 // Using the random recipe from this lesson, log a random whole number from 1 to 6. Then adapt
 // the recipe to produce a number from 10 to 20, and explain your adaptation in a comment.
-
+const roll = Math.floor(Math.random() * 6) + 1;
+const randomNumber = Math.floor(Math.random() * 11) + 10;
+console.log("randomNumber :>> ", randomNumber);
+// I changed the multiplier to 11 because there are 11 numbers from 10 to 20, and added 10 to shift the range.
 
 // TODO: Part six.
 // Open the MDN String reference, choose one method this lesson did not cover, and use it
 // correctly on a string of your choice. In a comment, cite the method's name and describe what
 // it does in one sentence of your own words.
-
+const first = "Hello";
+const second = "World";
+console.log(first.concat(" ", second));
+// concat() takes one or more strings and returns a new combined string.
 
 // TODO: Part seven.
 // Two classic exercises close the lesson. First, build a username generator: from a first name
@@ -57,7 +79,17 @@ const taxRate = 0.07;
 // initial followed by full last name, such as mmustermann. Second, write a mad-libs story:
 // declare four variables, an adjective, a noun, a verb, and a place, and log one short,
 // ridiculous story built from a single template literal that uses all four.
+const name = "Max";
+const surname = "Mustermann";
+const userName = name.slice(0, 1) + surname;
+console.log(userName.toLowerCase());
 
+const adjective = "lovely";
+const noun = "squirrel";
+const verb = "is jogging";
+const place = "Miami";
+
+console.log(`The ${adjective} ${noun} ${verb} in ${place}.`);
 
 // TODO: Save deliberately, commit with a clear message, push the branch, and open a pull request
 // into main.
