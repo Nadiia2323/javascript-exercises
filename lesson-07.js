@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // Lesson 07 exercise: Objects
 // In your exercise repository, create a branch named `lesson-07-exercise` and switch to it,
@@ -11,34 +11,96 @@
 // bracket notation with the key held in a variable, and note in a comment why the brackets
 // were required in that case.
 
-
+const menuItem = {
+  name: "Tomato Soup",
+  price: 7,
+  vegetarian: true,
+  category: "soup",
+  describe() {
+    return `${this.name} costs ${this.price} euros and is ${this.vegetarian ? "vegetarian" : "not vegetarian"}.`;
+  },
+};
+console.log(menuItem.describe());
+console.log(menuItem.name);
+console.log(menuItem.vegetarian);
+const key = "price";
+console.log(menuItem[key]);
 // TODO: Part two.
 // Give the item a `describe` method that returns one sentence built from the object's own
 // properties through `this`, and log the result of calling it.
 
-
 // TODO: Part three.
 // Build an array of at least five menu item objects, and walk it with `for...of`, logging one
 // formatted line per item.
+const menu = [
+  {
+    name: "Tomato Soup",
+    price: 7,
+    vegetarian: true,
+    category: "Soup",
+  },
+  {
+    name: "Pizza",
+    price: 10,
+    vegetarian: false,
+    category: "Main course",
+  },
+  {
+    name: "Caesar Salad",
+    price: 6,
+    vegetarian: true,
+    category: "Salad",
+  },
+  {
+    name: "Burger",
+    price: 9,
+    vegetarian: false,
+    category: "Main course",
+  },
+  {
+    name: "Sushi",
+    price: 12,
+    vegetarian: false,
+    category: "Japanese",
+  },
+];
 
-
+for (const element of menu) {
+  console.log(`${element.name} - ${element.price}€ - ${element.category}`);
+}
 // TODO: Part four.
 // Put the callback methods to work on the data: log the names of all vegetarian items by
 // combining `filter` and `map`, and fetch the first item cheaper than three euros with `find`.
 // Add a comment stating what `find` returns when nothing matches.
+const vegetarianItems = menu
+  .filter((item) => item.vegetarian)
+  .map((item) => item.name);
 
+console.log(vegetarianItems);
 
+const cheapItem = menu.find((item) => item.price <= 3);
+console.log(cheapItem); // find returns undefined when no item matches.
 // TODO: Part five.
 // Take one menu item and log its keys, its values, and finally every pair through a `for...of`
 // loop over its entries with a destructured pair, formatted as the key, a colon in the output
 // text, and the value.
-
+console.log(Object.keys(menuItem));
+console.log(Object.values(menuItem));
+for (const [key, value] of Object.entries(menuItem)) {
+  console.log(`${key}: ${value}`);
+}
 
 // TODO: Part six.
 // Assign one item to a second variable, change the price through the second name, and log the
 // first to demonstrate the shared reference. Then build a spread copy that overrides only the
 // price, and log both objects to prove they now differ in exactly that property.
-
+const secondItem = menuItem;
+secondItem.price = 23;
+console.log("secondItem :>> ", secondItem);
+console.log("menuItem :>> ", menuItem);
+const copiedItem = { ...menuItem, price: 44 };
+console.log("copiedItem :>> ", copiedItem);
+console.log("menuItem :>> ", menuItem);
 
 // TODO: Part seven.
 // As a stretch, build the classic word frequency counter: split the provided sentence into
@@ -47,9 +109,22 @@
 // caught your interest, log its entries ordered so that the most frequent word comes first.
 
 // * The provided sentence for the word frequency counter:
-const sentence = "the quick brown fox jumps over the lazy dog the fox sleeps and the dog dreams";
+const sentence =
+  "the quick brown fox jumps over the lazy dog the fox sleeps and the dog dreams";
 
-
+const wordCounter = (text) => {
+  const split = text.split(" ");
+  let counter = {};
+  for (const word of split) {
+    if (counter[word] === undefined) {
+      counter[word] = 1;
+    } else {
+      counter[word]++;
+    }
+  }
+  console.log(counter);
+};
+wordCounter(sentence);
 // TODO: Save deliberately, commit with a clear message, push the branch, and open a pull request
 // into main.
 // TODO: Submit the link to the pull request for review.
