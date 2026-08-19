@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // Lesson 08 exercise: Classes
 // In your exercise repository, create a branch named `lesson-08-exercise` and switch to it,
@@ -9,7 +9,25 @@
 // Write an `Artist` class with a constructor that receives a name, a genre, and a total
 // runtime, and a `describe` method that returns one sentence built from the instance's own
 // properties through `this`. Create two instances with `new` and log both descriptions.
+class Artist {
+  constructor(name, genre, total) {
+    this.name = name;
+    this.genre = genre;
+    this.total = total;
+  }
+  describe() {
+    return `${this.name}, ${this.genre}, total run time: ${this.total}`;
+  }
+  static named(artists, name) {
+    return artists.find((artist) => artist.name === name);
+  }
+}
 
+const pinkfong = new Artist("Pinkfong", "Children's music", "11:31");
+
+const cash = new Artist("Johnny Cash", "Country", "15:40");
+console.log(pinkfong.describe());
+console.log(cash.describe());
 
 // TODO: Part two.
 // The file provides the artists as an array of plain objects. Loop over it with `for...of`,
@@ -25,29 +43,54 @@ const artistData = [
   { name: "Johnny Cash", genre: "Country", total: "15:40" },
 ];
 
-
 // TODO: Part three.
 // The file contains three short snippets: a class call that is missing `new`, an arrow
 // function used as a method that reads `this`, and a correct call. Predict the outcome of each
 // in a comment before running, then verify one snippet at a time and correct your misses,
 // leaving both prediction and result visible.
+let artists = [];
+const createArtists = () => {
+  for (const artist of artistData) {
+    const newArtist = new Artist(artist.name, artist.genre, artist.total);
+    artists.push(newArtist);
+  }
+};
+createArtists();
+for (const artist of artists) {
+  console.log(artist.describe());
+}
 
 // * Three snippets. Predict each outcome in a comment, then verify one at a time.
 // ! Snippet one, a class call missing new. Uncomment after part one, predict first:
-// const broken = Artist("Pinkfong", "Children's music", "11:31");
+// const broken = Artist("Pinkfong", "Children's music", "11:31"); TypeError because the class is called without `new`.
 // ! Snippet two, an arrow function used as a method that reads this:
 // const single = { title: "Hurt", artist: "Johnny Cash", describe: () => `${this.title} by ${this.artist}` };
-// console.log(single.describe());
+// console.log(single.describe()); this` will not refer to single, so the result will be undefined
 // * Snippet three, the correct call. Uncomment after part one:
-// console.log(new Artist("Asake", "Afrobeats", "14:08").describe());
-
+// console.log(new Artist("Asake", "Afrobeats", "14:08").describe()); It will print the artist description.
 
 // TODO: Part four.
 // Write a `FeaturedArtist` class that extends `Artist`, adds a blurb property through a
 // constructor that calls `super` first, and overrides `describe` so that it builds on the
 // superclass version through `super.describe()`. Promote one artist and log the result.
+class FeaturedArtist extends Artist {
+  constructor(name, genre, total, blurb) {
+    super(name, genre, total);
+    this.blurb = blurb;
+  }
 
+  describe() {
+    return `${super.describe()} Blurb: ${this.blurb}`;
+  }
+}
+const featured = new FeaturedArtist(
+  "Asake",
+  "Afrobeats",
+  "14:08",
+  "The loudest new voice out of Lagos",
+);
 
+console.log(featured.describe());
 // TODO: Part five.
 // The file ends with a constructor function and two prototype method assignments, working code
 // in the pre-2015 style. Do not rewrite it. Above each line, add a comment naming its
@@ -58,22 +101,22 @@ const artistData = [
 function ArtistOld(name, genre) {
   this.name = name;
   this.genre = genre;
-}
+} // Similar to the class declaration and constructor.
 ArtistOld.prototype.describe = function () {
   return `${this.name}, ${this.genre}`;
-};
+}; // Same as describe() method inside a class.
 ArtistOld.prototype.tag = function () {
   return `#${this.genre.toLowerCase().replaceAll(" ", "-").replaceAll("'", "")}`;
-};
-
+}; // Same as another method inside a class
 
 // TODO: Part six.
 // As a stretch, add a static method `Artist.named` that receives an array of instances and a
 // name and returns the matching instance using `find`, and log the description of the instance
 // it returns. The `get` keyword from the extension is your alternative if getters caught your
 // interest.
+const foundArtist = Artist.named(artists, "Johnny Cash");
 
-
+console.log(foundArtist.describe());
 // TODO: Save deliberately, commit with a clear message, push the branch, and open a pull request
 // into main.
 // TODO: Submit the link to the pull request for review.
